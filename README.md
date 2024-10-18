@@ -1,24 +1,30 @@
-# README
+# Summary
+This is a demo rails application to show the danger of session fixation attacks.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+You can clone this repo to view the source code or if you are just looking for a demo you can run the app with docker.
 
-Things you may want to cover:
+`docker run -p 3000:3000 tweibell/session-fixation-application`
 
-* Ruby version
+## Instructions
+1. Open a seperate incognito window.
 
-* System dependencies
+2. Confirm the session IDs are different on both windows.
 
-* Configuration
+3. On one of the window, generate a xss payload.
 
-* Database creation
+4. Use the xss payload in the search parameter on the other windows.
 
-* Database initialization
+5. Notice now both session IDs are the same.
 
-* How to run the test suite
+6. Login in to one of the windows and refresh the other window.
 
-* Services (job queues, cache servers, search engines, etc.)
+7. Notice you are now logged in on both windows.
 
-* Deployment instructions
+## Lessons Learned
+1. Use HttpOnly cookies.
 
-* ...
+2. Don’t roll your own authentication. Use Devise.
+
+3. Call reset_session before associating a user. Clean slates matter.
+
+4. Call reset_session after disassociating a user. Once they’re out, keep them out.
